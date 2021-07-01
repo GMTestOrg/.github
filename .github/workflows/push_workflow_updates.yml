@@ -13,7 +13,7 @@ jobs:
     - name: Check out
       uses: actions/checkout@v1
 
-    - name: list files
+    - name: List Files
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
         FILES=$(curl -s -X GET -H -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $URL | jq -r '.[] | .filename')
