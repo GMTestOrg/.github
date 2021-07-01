@@ -16,5 +16,12 @@ jobs:
     - name: List Files
       run: |
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-        FILES=$(curl -s -X GET -H -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $URL | jq -r '.[] | .filename')
-        echo $FILES
+        FILES=( $(curl -s -X GET -H -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $URL | jq -r '.[] | .filename') )
+
+        for i in "${FILES[@]}"
+        do
+          request_body="{\"template_path\":\"$i\"}"
+          webhook_signature_header="x-webhook-signature: $(echo -n $request_body | openssl dgst -sha256 -hmac ${{ secrets.WEBHOOK_SECRET }})"
+          echo $webhook_signature_header
+          curl -X POST -H "${webhook_signature_header}" --data "${request_body}" https://3o5bijg2b0.execute-api.us-east-1.amazonaws.com/Prod/GithubAppUpdate/
+        done
