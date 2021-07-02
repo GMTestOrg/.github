@@ -21,7 +21,6 @@ jobs:
         for i in "${FILES[@]}"
         do
           request_body="{\"template_path\":\"$i\"}"
-          webhook_signature_header="x-webhook-signature: $(echo -n $request_body | openssl dgst -sha256 -hmac ${{ secrets.WEBHOOK_SECRET }})"
-          echo $webhook_signature_header
+          webhook_signature_header="$(echo -n $request_body | openssl dgst -sha256 -hmac ${{ secrets.WEBHOOK_SECRET }} | awk '{print "x-webhook-signature: "$2}')"
           curl -X POST -H "${webhook_signature_header}" --data "${request_body}" https://3o5bijg2b0.execute-api.us-east-1.amazonaws.com/Prod/GithubAppUpdate/
         done
