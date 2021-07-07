@@ -1,9 +1,9 @@
 name: push_workflow_updates
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches:
+      - master
 
 jobs:
   push_workflow_updates:
