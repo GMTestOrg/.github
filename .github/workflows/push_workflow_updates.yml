@@ -3,7 +3,7 @@ name: push_workflow_updates
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   push_workflow_updates:
