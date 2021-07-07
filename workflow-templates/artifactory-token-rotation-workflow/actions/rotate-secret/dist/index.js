@@ -1,3 +1,3 @@
-//Script Version 1.0.0
+//Script Version 1.0.1
 
 index.js
