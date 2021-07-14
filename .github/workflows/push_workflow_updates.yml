@@ -16,11 +16,14 @@ jobs:
     - name: List Files
       run: |
         LATEST_MERGED_PR=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=repo:GMTestOrg/.github+is:pr+is:merged | jq '.items' | jq 'max_by(.closed_at)' | jq '.number')
+        echo $LATEST_MERGED_PR
         URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/$LATEST_MERGED_PR/files"
+        echo $URL
         FILES=( $(curl -s -X GET -H -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $URL | jq -r '.[] | .filename') )
 
         for i in "${FILES[@]}"
         do
+          echo $i
           request_body="{\"template_path\":\"$i\"}"
           webhook_signature_header="$(echo -n $request_body | openssl dgst -sha256 -hmac ${{ secrets.WEBHOOK_SECRET }} | awk '{print "x-webhook-signature: "$2}')"
           curl -X POST -H "${webhook_signature_header}" --data "${request_body}" https://3o5bijg2b0.execute-api.us-east-1.amazonaws.com/Prod/GithubAppUpdate/
