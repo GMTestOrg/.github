@@ -1,0 +1,8 @@
+{
+    "name": "Java Build File",
+    "description": "Java Build File.",
+    "iconName": "example-icon",
+    "categories": [
+        "Java"
+    ]
+}
