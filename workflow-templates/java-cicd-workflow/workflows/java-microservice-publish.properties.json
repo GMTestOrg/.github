@@ -1,5 +1,8 @@
 {
     "name": "Java Publish Workflow",
     "description": "Java Publish Workflow template.",
-    "iconName": "example-icon"
+    "iconName": "example-icon",
+    "categories": [
+        "Java"
+    ]
 }

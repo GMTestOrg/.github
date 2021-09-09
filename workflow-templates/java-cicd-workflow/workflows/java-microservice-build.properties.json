@@ -1,5 +1,8 @@
 {
     "name": "Java Build Workflow",
     "description": "Java Build Workflow template.",
-    "iconName": "example-icon"
+    "iconName": "example-icon",
+    "categories": [
+        "Java"
+    ]
 }
